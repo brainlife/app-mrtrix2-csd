@@ -74,16 +74,7 @@ if [ ! -f dwi.mif ]; then
     mrconvert $input_nii_gz dwi.mif
 fi
 
-if [ ! -f b0.mif ]; then
-    mrconvert mask_anat.nii.gz b0.mif
-fi
-
-if [ ! -f $WMMK ]; then
-    mrconvert wm_anat.nii.gz $WMMK
-fi
-
-
-########### CREATE FILES FOR TRACKING ######
+########### CREATE FILES FOR CSD ######
 ## create a t2-mask from b0
 if [[ ${brainmask} == 'null' ]]; then
 	if [ -f mask.mif ]; then
@@ -162,9 +153,7 @@ for (( i_lmax=2; i_lmax<=$MAXLMAX; i_lmax+=2 )); do
     	fi
 done
 
-cp ./response${MAXLMAX}.txt ./csd/
-cp ${response} ./csd/
-
+cp ./response${MAXLMAX}.txt ./csd/response.txt
 
 ################# CLEANUP #######################################
 if [ -f ./csd/lmax${MAXLMAX}.nii.gz ]; then

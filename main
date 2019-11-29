@@ -3,5 +3,5 @@
 #PBS -N mrtrix2-csd
 #PBS -V
 
-echo "tracking"
+echo "csd fit"
 time singularity exec -e docker://brainlife/mrtrix_on_mcr:1.0 ./csd.sh
