@@ -44,6 +44,7 @@ You can submit this App online at [https://doi.org/10.25663/brainlife.app.255](h
 
 ```json 
 {
+   "dtiinit":  testdata/dtiinit",
    "dwi":    "testdata/dwi/dwi.nii.gz",
    "bvals":    "testdata/dwi/dwi.bvals",
    "bvecs":    "tesdata/dwi/dwi.bvecs",
