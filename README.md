@@ -10,7 +10,7 @@
   <a href="LICENSE"><img src="https://img.shields.io/badge/License-MIT-lightgrey.svg" alt="MIT license"></a>
 </p>
 
-## 🧠 At a glance
+## At a glance
 
 <!-- brainlife-app:begin (generated from the App manifest; edit the manifest, not this block) -->
 
@@ -20,27 +20,27 @@ Builds a brain mask (from the dtiInit brain mask or by thresholding the mean DWI
 
 | | |
 |---|---|
-| 📥 **Inputs** | `neuro/mask` (optional) · `neuro/dtiinit` |
-| 📤 **Outputs** | `neuro/csd` |
-| 🐳 **Container** | `brainlife/mrtrix_on_mcr:1.0` |
-| ⚙️ **Resources** | 8 CPUs · 1 h walltime |
-| 🔗 **Run it** | [doi.org/10.25663/brainlife.app.344](https://doi.org/10.25663/brainlife.app.344) |
+| **Inputs** | `neuro/mask` (optional) · `neuro/dtiinit` |
+| **Outputs** | `neuro/csd` |
+| **Container** | `brainlife/mrtrix_on_mcr:1.0` |
+| **Resources** | 8 CPUs · 1 h walltime |
+| **Run it** | [doi.org/10.25663/brainlife.app.344](https://doi.org/10.25663/brainlife.app.344) |
 
-#### 📥 Inputs
+#### Inputs
 
 | Input | Datatype | Required | Description |
 |---|---|---|---|
 | `brainmask` | `neuro/mask` | no | The path to the mask datatype containing the brainmask of the DWI |
 | `dtiinit` | `neuro/dtiinit` | yes | The path to the DTIINIT datatype |
 
-#### 📤 Outputs
+#### Outputs
 
 | Output | Datatype | Description |
 |---|---|---|
 | `csd` | `neuro/csd` | FODs from the CSD model fit using MRtrix2 |
 
 <details>
-<summary><b>⚙️ Parameters</b> (1)</summary>
+<summary><b>Parameters</b> (1)</summary>
 
 | Parameter | Type | Default | Description |
 |---|---|---|---|
@@ -50,7 +50,7 @@ Builds a brain mask (from the dtiInit brain mask or by thresholding the mean DWI
 
 <!-- brainlife-app:end -->
 
-## 🏷️ Versions on brainlife.io
+## Versions on brainlife.io
 
 Two Apps are built from the `v1.0` branch of this repository; they differ only in the input they take.
 
@@ -59,22 +59,22 @@ Two Apps are built from the `v1.0` branch of this repository; they differ only i
 | Mrtrix2 CSD (dtiinit) | `neuro/dtiinit` | [`v1.0`](https://github.com/brainlife/app-mrtrix2-csd/tree/v1.0) | [doi:10.25663/brainlife.app.344](https://doi.org/10.25663/brainlife.app.344) | current |
 | Mrtrix2 CSD | `neuro/dwi` | [`v1.0`](https://github.com/brainlife/app-mrtrix2-csd/tree/v1.0) | [doi:10.25663/brainlife.app.255](https://doi.org/10.25663/brainlife.app.255) | current |
 
-## 🚀 Running the App
+## Running the App
 
-### ☁️ On brainlife.io
+### On brainlife.io
 
 Open the [dtiinit](https://doi.org/10.25663/brainlife.app.344) or [DWI](https://doi.org/10.25663/brainlife.app.255) version, choose the diffusion input (and, optionally, a brain mask) from your project, set `max_lmax` and press **Execute**. The App writes a `neuro/csd` dataset tagged `mrtrix2` to your project, which can guide MRtrix 0.2-based tractography Apps. It is meant for single-shell data and is not suited to multi-shell multi-tissue CSD.
 
 - **`max_lmax`**: the maximum spherical-harmonic order. CSD is fitted at every even order from 2 up to this value. If left blank, it is calculated from the number of non-zero b-values in the dtiInit data.
 
-### 🔬 How it works
+### How it works
 
 1. The DWI (from the dtiInit output or the DWI input) and its gradients are converted to MRtrix 0.2 format.
 2. A brain mask is taken from the provided mask (or the dtiInit brain mask), or otherwise built by thresholding and median-filtering the mean DWI.
 3. A tensor is fitted (`dwi2tensor`), and a single-fibre mask (FA > 0.7 inside the eroded brain mask) is used to estimate the response function (`estimate_response`).
 4. `csdeconv` is run at each even lmax up to `max_lmax`.
 
-### 💻 Locally
+### Locally
 
 You need [Singularity/Apptainer](https://apptainer.org/) and [`jq`](https://jqlang.github.io/jq/). The App runs in the `brainlife/mrtrix_on_mcr:1.0` container.
 
@@ -106,7 +106,7 @@ You need [Singularity/Apptainer](https://apptainer.org/) and [`jq`](https://jqla
    ./main
    ```
 
-## 📦 Outputs
+## Outputs
 
 ```text
 csd/
@@ -116,12 +116,12 @@ csd/
 └── response.txt      response function estimated at max_lmax
 ```
 
-## 🩺 Troubleshooting
+## Troubleshooting
 
 - **`csd fit failed`**: the CSD output for `max_lmax` was not written. Check the log, and lower `max_lmax` if the data have too few diffusion directions.
 - **Blank `max_lmax` with a DWI input**: the automatic lmax calculation reads the b-values from a dtiInit output, so set `max_lmax` explicitly when you use the DWI version.
 
-## 📚 Citing
+## Citing
 
 > [!TIP]
 > If you use this App in your work, please cite the App, the software it builds on and brainlife.io (below). GitHub's **Cite this repository** button gives the App citation in APA and BibTeX.
@@ -133,14 +133,14 @@ csd/
 - Hayashi S, Caron BA, Heinsfeld AS, et al. brainlife.io: a decentralized and open-source cloud platform to support neuroscience research. *Nature Methods* 21:809–813 (2024). [doi:10.1038/s41592-024-02237-2](https://doi.org/10.1038/s41592-024-02237-2)
 - Avesani P, McPherson B, Hayashi S, et al. The open diffusion data derivatives, brain data upcycling via integrated publishing of derivatives and reproducible open cloud services. *Scientific Data* 6:69 (2019). [doi:10.1038/s41597-019-0073-y](https://doi.org/10.1038/s41597-019-0073-y)
 
-## 👥 Authors
+## Authors
 
 - Brad Caron
 - Brent McPherson
 
 **Contributors:** Soichi Hayashi
 
-## 💰 Funding
+## Funding
 
 [![Wellcome-226486/Z/22/Z](https://img.shields.io/badge/Wellcome-226486%2FZ%2F22%2FZ-purple.svg)](https://wellcome.org/)
 [![NIH-NINDS-U24NS140384](https://img.shields.io/badge/NIH_NINDS-U24NS140384-green.svg)](https://reporter.nih.gov/project-details/11261037)
@@ -159,6 +159,6 @@ csd/
 
 <sub>brainlife.io is publicly funded, and acknowledging that support helps keep it running. This App was developed with support from Wellcome, the U.S. National Institutes of Health (including the BRAIN Initiative BRAIN CONNECTS program: The Axonal Projectome EXchange, U24NS140384, and the Center for Mesoscale Connectomics, UM1NS132207) and the U.S. National Science Foundation.</sub>
 
-## ⚖️ License
+## License
 
 MIT (see the [`LICENSE`](https://github.com/brainlife/app-mrtrix2-csd/blob/v1.0/LICENSE) file on the `v1.0` branch).
