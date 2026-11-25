@@ -3,6 +3,31 @@
 
 # Mrtrix2 CSD 
 
+<!-- brainlife-app:begin (generated from the App manifest; edit the manifest, not this block) -->
+
+**Fits constrained spherical deconvolution with MRtrix 0.2 at every even lmax up to a maximum and outputs the fibre orientation distributions and response function.**
+
+Builds a brain mask (from the dtiInit brain mask or by thresholding the mean DWI), fits a tensor, derives a single-fibre mask (FA > 0.7) to estimate the response, and runs csdeconv for lmax 2, 4, ... up to max_lmax. Use it to produce MRtrix2 CSD inputs for MRtrix 0.2-based tractography Apps. Not suited to multi-shell multi-tissue CSD.
+
+Run it on brainlife.io: [https://doi.org/10.25663/brainlife.app.344](https://doi.org/10.25663/brainlife.app.344)
+
+| Input | Datatype | Required | Description |
+|---|---|---|---|
+| `brainmask` | `neuro/mask` | no | The path to the mask datatype containing the brainmask of the DWI |
+| `dtiinit` | `neuro/dtiinit` | yes | The path to the DTIINIT datatype |
+
+| Output | Datatype | Description |
+|---|---|---|
+| `csd` | `neuro/csd` | FODs from the CSD model fit using MRtrix2 |
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `max_lmax` | number |  | maximum spherical harmonic order (i.e. lmax). If blank, will automatically calculate based on number of shells in data. |
+
+Runtime: container `brainlife/mrtrix_on_mcr:1.0`; 8 CPUs; 1 h walltime.
+
+<!-- brainlife-app:end -->
+
 This app will will fit the constrained spherical deconvolution model using MrTrix0.2. This app takes in a DWI datatype as input and outputs csd's of various spherical harmonic orders (i.e. lmax). The output of this can be used to guide tractography applications. 
 
 ### Authors 
